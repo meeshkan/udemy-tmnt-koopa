@@ -15,7 +15,13 @@ x = base_model.output
 x = GlobalAveragePooling2D()(x)
 # let's add a fully-connected layer
 x = Dense(1024, activation='relu')(x)
-# let's add a couple more FC layers just cuz
+# from experimenting, I find that this network works best
+# with a couple intermediary dense layers before getting
+# to the final classifier
+# this type of thing is difficult to anticipate beforehand
+# and comes from tweaking/experience
+# feel free to play around with the number of dense layers and
+# their size, but 1024 > 512 > 32 > 2 is a sensible default
 x = Dense(512, activation='relu')(x)
 x = Dense(32, activation='relu')(x)
 # and a logistic layer -- we have 2 classes - koopa troopers and tmnt
