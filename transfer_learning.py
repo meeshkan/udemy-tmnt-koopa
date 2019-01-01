@@ -15,6 +15,9 @@ x = base_model.output
 x = GlobalAveragePooling2D()(x)
 # let's add a fully-connected layer
 x = Dense(1024, activation='relu')(x)
+# let's add a couple more FC layers just cuz
+x = Dense(512, activation='relu')(x)
+x = Dense(32, activation='relu')(x)
 # and a logistic layer -- we have 2 classes - koopa troopers and tmnt
 predictions = Dense(2, activation='softmax')(x)
 
@@ -46,7 +49,7 @@ step_size_train=train_generator.n//train_generator.batch_size
 # train the model on the new data for a few epochs
 model.fit_generator(generator=train_generator,
                    steps_per_epoch=step_size_train,
-                   epochs=10)
+                   epochs=50)
 
 # at this point, the top layers are well trained and we can start fine-tuning
 # convolutional layers from inception V3. We will freeze the bottom N layers
@@ -76,4 +79,4 @@ step_size_train=train_generator.n//train_generator.batch_size
 # train the model on the new data for a few epochs
 model.fit_generator(generator=train_generator,
                    steps_per_epoch=step_size_train,
-                   epochs=10)
+                   epochs=50)
