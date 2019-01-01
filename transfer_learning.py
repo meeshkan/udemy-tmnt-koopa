@@ -44,7 +44,8 @@ model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=[met
 
 def on_batch_end(batch, logs):
     try:
-        meeshkan.report_scalar("train loss", logs['loss'])
+        print(float(logs['loss']))
+        meeshkan.report_scalar("train loss", float(logs['loss']))
     except Exception as e:
         print(e)
 
