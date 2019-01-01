@@ -45,9 +45,8 @@ def on_batch_end(batch, logs):
     try:
         meeshkan.report_scalar("train loss", logs['loss'])
         meeshkan.report_scalar("train accuracy", logs['categorical_accuracy'])
-    except:
-        # meeshkan is not running
-        pass
+    except Exception as e:
+        print(e)
 
 meeshkan_callback = LambdaCallback(on_batch_end=on_batch_end)
 
