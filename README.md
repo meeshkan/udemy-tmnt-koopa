@@ -40,7 +40,7 @@ python partition_into_test_and_train.py
 ### Convert pngs to jpgs
 This gets rid of any RGBA images. To do this, first install install [ImageMagick](https://www.imagemagick.org).
 ```
-python convert_all_pngs_to_jpgs.py.py
+python convert_all_pngs_to_jpgs.py
 ```
 
 ### Run the training
