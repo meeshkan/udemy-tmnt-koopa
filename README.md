@@ -44,6 +44,7 @@ python convert_all_pngs_to_jpgs.py
 ```
 
 ### Run the training
+To receive notifications to Slack every 5 minutes, use the following command:
 ```
-python transfer_learning.py
+meeshkan submit --name transfer_learning --report-interval 300 python transfer_learning.py 
 ```
