@@ -9,6 +9,7 @@ from keras import backend as K
 from keras.callbacks import LambdaCallback
 from keras import metrics
 import meeshkan
+import time
 
 # create the base pre-trained model
 base_model = InceptionV3(weights='imagenet', include_top=False)
@@ -49,10 +50,10 @@ def on_batch_end(batch, logs):
 
 meeshkan_callback = LambdaCallback(on_batch_end=on_batch_end)
 
-def make_train_generator():
+def _make_generator(destFolder):
     train_datagen=ImageDataGenerator(preprocessing_function=preprocess_input) #included in our dependencies
 
-    train_generator=train_datagen.flow_from_directory('./train/', # this is where you specify the path to the main data folder
+    train_generator=train_datagen.flow_from_directory(destFolder, # this is where you specify the path to the main data folder
                                                     target_size=(229,229),
                                                     color_mode='rgb',
                                                     batch_size=32,
@@ -61,12 +62,18 @@ def make_train_generator():
     return train_generator
 
 
+def make_train_generator():
+    return _make_generator('./train/')
+
+def make_test_generator():
+    return _make_generator('./test/')
+
 train_generator = make_train_generator()
 step_size_train=train_generator.n//train_generator.batch_size
 # train the model on the new data for a few epochs
 model.fit_generator(generator=train_generator,
                    steps_per_epoch=step_size_train,
-                   epochs=50,
+                   epochs=1,
                    callbacks=[meeshkan_callback])
 
 # at this point, the top layers are well trained and we can start fine-tuning
@@ -97,5 +104,11 @@ step_size_train=train_generator.n//train_generator.batch_size
 # train the model on the new data for a few epochs
 model.fit_generator(generator=train_generator,
                    steps_per_epoch=step_size_train,
-                   epochs=50,
+                   epochs=1,
                    callbacks=[meeshkan_callback])
+
+model.save('tmnt_koopa_%d.h5' % (int(time.time()*1000),))
+
+test_generator = make_test_generator()
+step_size_test=test_generator.n//test_generator.batch_size
+model.evaluate_generator(generator=test_generator)
