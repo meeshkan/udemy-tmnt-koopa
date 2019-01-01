@@ -4,7 +4,7 @@ Welcomd to the GitHub project for our AWESOME Udemy course where we use Machine 
 
 ## How to use
 
-First, make sure that you have your Meeshkan API Key saved in a file called `.meeshkan/credentials` located in the root directory of this project.  To get your Meeshkan API key, sign up on [meeshkan.com](https://www.meeshkan.com) and check out the docs at [meeshkan.com/docs](https://www.meeshkan.com/docs).
+First, make sure that you have your Meeshkan API Key saved in a file called `.meeshkan/credentials` located in your **home** directory.  To get your Meeshkan API key, sign up on [meeshkan.com](https://www.meeshkan.com) and check out the docs at [meeshkan.com/docs](https://www.meeshkan.com/docs).
 
 Then, run the following commands:
 
