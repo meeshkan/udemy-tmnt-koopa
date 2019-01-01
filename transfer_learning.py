@@ -44,7 +44,6 @@ model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=[met
 
 def on_batch_end(batch, logs):
     try:
-        print(float(logs['loss']))
         meeshkan.report_scalar("train loss", float(logs['loss']))
     except Exception as e:
         print(e)
@@ -74,7 +73,7 @@ step_size_train=train_generator.n//train_generator.batch_size
 # train the model on the new data for a few epochs
 model.fit_generator(generator=train_generator,
                    steps_per_epoch=step_size_train,
-                   epochs=1,
+                   epochs=50,
                    callbacks=[meeshkan_callback])
 
 # at this point, the top layers are well trained and we can start fine-tuning
@@ -105,7 +104,7 @@ step_size_train=train_generator.n//train_generator.batch_size
 # train the model on the new data for a few epochs
 model.fit_generator(generator=train_generator,
                    steps_per_epoch=step_size_train,
-                   epochs=1,
+                   epochs=10,
                    callbacks=[meeshkan_callback])
 
 model.save('tmnt_koopa_%d.h5' % (int(time.time()*1000),))
