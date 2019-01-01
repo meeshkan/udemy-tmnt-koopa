@@ -4,3 +4,4 @@ __pycache__
 dataset/
 test/
 train/
+.meeshkan/

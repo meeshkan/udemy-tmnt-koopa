@@ -6,6 +6,9 @@ from keras.preprocessing import image
 from keras.models import Model
 from keras.layers import Dense, GlobalAveragePooling2D
 from keras import backend as K
+from keras.callbacks import LambdaCallback
+from keras import metrics
+import meeshkan
 
 # create the base pre-trained model
 base_model = InceptionV3(weights='imagenet', include_top=False)
@@ -36,7 +39,17 @@ for layer in base_model.layers:
     layer.trainable = False
 
 # compile the model (should be done *after* setting layers to non-trainable)
-model.compile(optimizer='rmsprop', loss='categorical_crossentropy')
+model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=[metrics.categorical_accuracy])
+
+def on_batch_end(batch, logs):
+    try:
+        meeshkan.report_scalar("train loss", logs['loss'])
+        meeshkan.report_scalar("train accuracy", logs['categorical_accuracy'])
+    except:
+        # meeshkan is not running
+        pass
+
+meeshkan_callback = LambdaCallback(on_batch_end=on_batch_end)
 
 def make_train_generator():
     train_datagen=ImageDataGenerator(preprocessing_function=preprocess_input) #included in our dependencies
@@ -55,7 +68,8 @@ step_size_train=train_generator.n//train_generator.batch_size
 # train the model on the new data for a few epochs
 model.fit_generator(generator=train_generator,
                    steps_per_epoch=step_size_train,
-                   epochs=50)
+                   epochs=50,
+                   callbacks=[meeshkan_callback])
 
 # at this point, the top layers are well trained and we can start fine-tuning
 # convolutional layers from inception V3. We will freeze the bottom N layers
@@ -76,7 +90,7 @@ for layer in model.layers[249:]:
 # we need to recompile the model for these modifications to take effect
 # we use SGD with a low learning rate
 from keras.optimizers import SGD
-model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossentropy')
+model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossentropy', metrics=[metrics.categorical_accuracy])
 
 # we train our model again (this time fine-tuning the top 2 inception blocks
 # alongside the top Dense layers
@@ -85,4 +99,5 @@ step_size_train=train_generator.n//train_generator.batch_size
 # train the model on the new data for a few epochs
 model.fit_generator(generator=train_generator,
                    steps_per_epoch=step_size_train,
-                   epochs=50)
+                   epochs=50,
+                   callbacks=[meeshkan_callback])
