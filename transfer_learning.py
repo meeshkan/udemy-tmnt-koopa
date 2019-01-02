@@ -6,7 +6,7 @@ from keras.preprocessing import image
 from keras.models import Model
 from keras.layers import Dense, GlobalAveragePooling2D
 from keras import backend as K
-from keras.callbacks import LambdaCallback
+from keras.callbacks import LambdaCallback, ModelCheckpoint
 from keras import metrics
 import meeshkan
 import time
@@ -74,7 +74,8 @@ step_size_train=train_generator.n//train_generator.batch_size
 model.fit_generator(generator=train_generator,
                    steps_per_epoch=step_size_train,
                    epochs=50,
-                   callbacks=[meeshkan_callback])
+                   callbacks=[meeshkan_callback,
+                              ModelCheckpoint('weights.{epoch:02d}.hdf5')])
 
 # at this point, the top layers are well trained and we can start fine-tuning
 # convolutional layers from inception V3. We will freeze the bottom N layers
@@ -105,10 +106,12 @@ step_size_train=train_generator.n//train_generator.batch_size
 model.fit_generator(generator=train_generator,
                    steps_per_epoch=step_size_train,
                    epochs=10,
-                   callbacks=[meeshkan_callback])
+                   callbacks=[meeshkan_callback,
+                              ModelCheckpoint('weights.{epoch:02d}.hdf5')])
 
 model.save('tmnt_koopa_%d.h5' % (int(time.time()*1000),))
 
 test_generator = make_test_generator()
 step_size_test=test_generator.n//test_generator.batch_size
-model.evaluate_generator(generator=test_generator)
+test_loss = model.evaluate_generator(generator=test_generator, steps=step_size_test)
+print('test loss', test_loss)
