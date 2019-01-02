@@ -16,7 +16,8 @@ Then, from your Meeshkan dashboard, click **Install on Slack** and make sure to 
 
 ![GitHub Logo](/meeshkan_registration.jpg)
 
-### Create a virtual environment
+### Create Python environment
+Meeshkan client requires **Python version >= 3.6.2** so check that you're using recent enough Python! Then create a [virtual environment](https://virtualenv.pypa.io/en/latest/) with
 ```
 $ virtualenv .venv
 $ source .venv/bin/activate
@@ -33,6 +34,7 @@ $ pip install -r requirements.txt
 ```
 $ mkdir -p dataset/tmnt && python search_bing_api.py --query "teenage mutant ninja turtles" --query "teenage mutant ninja turtles cartoon" --query "teenage mutant ninja turtles leonardo" --query "teenage mutant ninja turtles michelangelo" --query "teenage mutant ninja turtles raphael" --output dataset/tmnt
 ```
+Note that this could take half an hour to one hour depending on your network speed.
 
 ### Get some Koopa Troopa images
 
@@ -46,7 +48,7 @@ $ python partition_into_test_and_train.py
 ```
 
 ### Convert pngs to jpgs
-This gets rid of any RGBA images. To do this, first install install [ImageMagick](https://www.imagemagick.org).
+This gets rid of any RGBA images. To do this, first install [ImageMagick](https://www.imagemagick.org).
 ```
 $ python convert_all_pngs_to_jpgs.py
 ```
