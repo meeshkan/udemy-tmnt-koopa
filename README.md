@@ -62,6 +62,8 @@ $ meeshkan start
 $ meeshkan submit --name transfer_learning --report-interval 300 python transfer_learning.py 
 ```
 
+Note that, by default, the script activates model checkpointing, which results in a model being saved every epoch.  As the model is ~150 MB, you will most likely want to delete the checkpointed models from time to time or disable them by removing the model `ModelCheckpoint` callback.
+
 ### Working with `meeshkan`
 
 List submitted jobs:
