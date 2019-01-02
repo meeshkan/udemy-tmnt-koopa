@@ -43,7 +43,7 @@ $ mkdir -p dataset/koopa && python search_bing_api.py --query "koopa troopa" --q
 ```
 
 ### Partition the dataset
-Partition images in `dataset´ into `train` and `test` folders:
+Partition images in `dataset` into `train` and `test` folders:
 ```
 $ python partition_into_test_and_train.py
 ```
