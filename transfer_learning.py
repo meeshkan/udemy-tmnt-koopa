@@ -113,5 +113,5 @@ model.save('tmnt_koopa_%d.h5' % (int(time.time()*1000),))
 
 test_generator = make_test_generator()
 step_size_test=test_generator.n//test_generator.batch_size
-test_loss = model.evaluate_generator(generator=test_generator, steps=step_size_test)
-print('test loss', test_loss)
+test_loss_and_accuracy = model.evaluate_generator(generator=test_generator, steps=step_size_test)
+print('test loss and accuracy', test_loss_and_accuracy)
