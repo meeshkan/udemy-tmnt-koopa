@@ -12,7 +12,7 @@ First, make sure that you have your Meeshkan API Key saved in a file called `.me
 
 To sign up for the course's Slack workspace, [click here](https://join.slack.com/t/meeshkan-community/shared_invite/enQtNTA5NjIyMzU0MjkyLTE3YjhlNGRlNjM4OTk0OGE1ODE4YWM3NzZkMTkwODVjNWUzMjA3YjFmMWI1NmNjZmJmM2VkN2I3YmE5Nzk0NTU).
 
-Then, from your Meeshkan dashboard, click **Install on Slack** and make sure to use the meeshkan-community workspace on the top-left corner and the **Slackbot** channel in the **Post to** picker.
+Then, from your [Meeshkan dashboard](https://www.meeshkan.com/app), click **Install on Slack** and make sure to use the meeshkan-community workspace on the top-left corner and the **Slackbot** channel in the **Post to** picker.
 
 ![GitHub Logo](/meeshkan_registration.jpg)
 
@@ -24,33 +24,35 @@ $ source .venv/bin/activate
 ```
 Make sure your virtual environment is **always** activated for the following commands.
 
-### Install the dependencies
+Then, you can install the dependencies for the project with the following command.
+
 ```
 $ pip install -r requirements.txt
 ```
 
-### Get some TMNT images
+### Get some TMNT and Koopa Troopa images
+
+First, let's get some Teenage Mutant Ninja Turtle images!
 
 ```
 $ mkdir -p dataset/tmnt && python search_bing_api.py --query "teenage mutant ninja turtles" --query "teenage mutant ninja turtles cartoon" --query "teenage mutant ninja turtles leonardo" --query "teenage mutant ninja turtles michelangelo" --query "teenage mutant ninja turtles raphael" --output dataset/tmnt
 ```
 Note that this could take half an hour to one hour depending on your network speed.
 
-### Get some Koopa Troopa images
+Then, to get the Koopa Troopa images.
 
 ```
 $ mkdir -p dataset/koopa && python search_bing_api.py --query "koopa troopa" --query "koopa paratroopa" --query "koopa red" --query "koopa troopa costume" --output dataset/koopa
 ```
 
-### Partition the dataset
+### Partition and convert the dataset
 Partition images in `dataset` into `train` and `test` folders:
 ```
 $ python partition_into_test_and_train.py
 ```
 Note that images are deleted from `dataset` folder!
 
-### Convert pngs to jpgs
-This gets rid of any RGBA images. To do this, first install [ImageMagick](https://www.imagemagick.org).
+Then, run the following command to get rid of any RGBA images. To do this, first install [ImageMagick](https://www.imagemagick.org).
 ```
 $ python convert_all_pngs_to_jpgs.py
 ```
@@ -85,3 +87,17 @@ Print notification history for the job:
 ```bash
 $ meeshkan notifications transfer_learning
 ```
+
+### Make some predictions!
+
+The real fun of this project is that we can predict whether "real" turtles look more like TMNTs or Koopa Troopas.
+
+To grab some pictures of real turtles, run the following command.
+```
+$ mkdir -p predict/turtle && python search_bing_api.py --query "turtle" --query "turtle face" --query "cute turtle" --query "turtle close up" --output predict/turtle
+```
+
+Then, run
+
+```
+$ python make_predictions.py -m your_model_file_name.h5 -p predict/
