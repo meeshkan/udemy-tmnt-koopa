@@ -100,4 +100,4 @@ $ mkdir -p predict/turtle && python search_bing_api.py --query "turtle" --query 
 Then, run
 
 ```
-$ python make_predictions -m your_model_file_name.h5 -p predict/
+$ python make_predictions.py -m your_model_file_name.h5 -p predict/
