@@ -94,7 +94,7 @@ The real fun of this project is that we can predict whether "real" turtles look 
 
 To grab some pictures of real turtles, run the following command.
 ```
-mkdir -p predict/turtle && python search_bing_api.py --query "turtle" --query "turtle face" --output predict/turtle
+mkdir -p predict/turtle && python search_bing_api.py --query "turtle" --query "turtle face" --query "cute turtle" --query "turtle close up" --output predict/turtle
 ```
 
 Then, run
