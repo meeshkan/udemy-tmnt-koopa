@@ -24,7 +24,8 @@ $ source .venv/bin/activate
 ```
 Make sure your virtual environment is **always** activated for the following commands.
 
-### Install the dependencies
+Then, you can install the dependencies for the project with the following command.
+
 ```
 $ pip install -r requirements.txt
 ```
