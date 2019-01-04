@@ -45,15 +45,14 @@ Then, to get the Koopa Troopa images.
 $ mkdir -p dataset/koopa && python search_bing_api.py --query "koopa troopa" --query "koopa paratroopa" --query "koopa red" --query "koopa troopa costume" --output dataset/koopa
 ```
 
-### Partition the dataset
+### Partition and convert the dataset
 Partition images in `dataset` into `train` and `test` folders:
 ```
 $ python partition_into_test_and_train.py
 ```
 Note that images are deleted from `dataset` folder!
 
-### Convert pngs to jpgs
-This gets rid of any RGBA images. To do this, first install [ImageMagick](https://www.imagemagick.org).
+Then, run the following command to get rid of any RGBA images. To do this, first install [ImageMagick](https://www.imagemagick.org).
 ```
 $ python convert_all_pngs_to_jpgs.py
 ```
