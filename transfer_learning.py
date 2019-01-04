@@ -44,22 +44,22 @@ model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=[met
 
 def on_batch_end(batch, logs):
     try:
-        meeshkan.report_scalar("train loss", float(logs['loss']))
+      meeshkan.report_scalar("train loss", float(logs['loss']))
     except Exception as e:
         print(e)
 
 meeshkan_callback = LambdaCallback(on_batch_end=on_batch_end)
 
 def _make_generator(destFolder):
-    train_datagen=ImageDataGenerator(preprocessing_function=preprocess_input) #included in our dependencies
+    datagen=ImageDataGenerator(preprocessing_function=preprocess_input) #included in our dependencies
 
-    train_generator=train_datagen.flow_from_directory(destFolder, # this is where you specify the path to the main data folder
-                                                    target_size=(229,229),
-                                                    color_mode='rgb',
-                                                    batch_size=32,
-                                                    class_mode='categorical',
-                                                    shuffle=True)
-    return train_generator
+    generator=datagen.flow_from_directory(destFolder, # this is where you specify the path to the main data folder
+                                          target_size=(229,229),
+                                          color_mode='rgb',
+                                          batch_size=32,
+                                          class_mode='categorical',
+                                          shuffle=True)
+    return generator
 
 
 def make_train_generator():
