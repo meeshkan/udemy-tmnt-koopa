@@ -87,3 +87,17 @@ Print notification history for the job:
 ```bash
 $ meeshkan notifications transfer_learning
 ```
+
+### Make some predictions!
+
+The real fun of this project is that we can predict whether "real" turtles look more like TMNTs or Koopa Troopas.
+
+To grab some pictures of real turtles, run the following command.
+```
+mkdir -p predict/turtle && python search_bing_api.py --query "turtle" --query "turtle face" --output predict/turtle
+```
+
+Then, run
+
+```
+python make_predictions -m your_model_file_name.h5 -p predict/turtle
