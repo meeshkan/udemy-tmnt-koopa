@@ -12,7 +12,7 @@ First, make sure that you have your Meeshkan API Key saved in a file called `.me
 
 To sign up for the course's Slack workspace, [click here](https://join.slack.com/t/meeshkan-community/shared_invite/enQtNTA5NjIyMzU0MjkyLTE3YjhlNGRlNjM4OTk0OGE1ODE4YWM3NzZkMTkwODVjNWUzMjA3YjFmMWI1NmNjZmJmM2VkN2I3YmE5Nzk0NTU).
 
-Then, from your Meeshkan dashboard, click **Install on Slack** and make sure to use the meeshkan-community workspace on the top-left corner and the **Slackbot** channel in the **Post to** picker.
+Then, from your [Meeshkan dashboard](https://www.meeshkan.com/app), click **Install on Slack** and make sure to use the meeshkan-community workspace on the top-left corner and the **Slackbot** channel in the **Post to** picker.
 
 ![GitHub Logo](/meeshkan_registration.jpg)
 
@@ -29,14 +29,16 @@ Make sure your virtual environment is **always** activated for the following com
 $ pip install -r requirements.txt
 ```
 
-### Get some TMNT images
+### Get some TMNT and Koopa Troopa images
+
+First, let's get some Teenage Mutant Ninja Turtle images!
 
 ```
 $ mkdir -p dataset/tmnt && python search_bing_api.py --query "teenage mutant ninja turtles" --query "teenage mutant ninja turtles cartoon" --query "teenage mutant ninja turtles leonardo" --query "teenage mutant ninja turtles michelangelo" --query "teenage mutant ninja turtles raphael" --output dataset/tmnt
 ```
 Note that this could take half an hour to one hour depending on your network speed.
 
-### Get some Koopa Troopa images
+Then, to get the Koopa Troopa images.
 
 ```
 $ mkdir -p dataset/koopa && python search_bing_api.py --query "koopa troopa" --query "koopa paratroopa" --query "koopa red" --query "koopa troopa costume" --output dataset/koopa
