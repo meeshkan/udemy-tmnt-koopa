@@ -109,10 +109,16 @@ for term in args["query"]:
 				except IOError:
 				# if the image is `None` then we could not properly load the
 				# image from disk (so it should be ignored)
-					print("[INFO] deleting: {}".format(p))
-					os.remove(p)
+					try:
+						print("[INFO] deleting: {}".format(p))
+						os.remove(p)
+					except FileNotFoundError:
+						print("[INFO] Failed deleting: {}".format(v["contentUrl"]))
+						pass
 					continue
-		 
+				except NameError:  # In case `p` is not defined
+					print("[INFO] Failed fetching: {}".format(v["contentUrl"]))
+					continue
 				# update the counter
 				total += 1
 		if curOffset == results["nextOffset"]:
