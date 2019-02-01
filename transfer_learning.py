@@ -44,8 +44,8 @@ model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=[met
 # Report train set loss and categorical accuracy to the Meeshkan agent at the end of minibatch
 def on_batch_end(batch, logs):  # pylint: disable=unused-argument
     try:
-        meeshkan.report_scalar("train loss", float(logs['loss']))
-        meeshkan.report_scalar("Accuracy", float(logs['categorical_accuracy']))
+        meeshkan.report_scalar("Train loss", float(logs['loss']))
+        meeshkan.report_scalar("Train accuracy", float(logs['categorical_accuracy']))
     except Exception as e:  # pylint: disable=broad-except
         print(e)
 
@@ -107,18 +107,27 @@ model.compile(optimizer=SGD(lr=0.0001, momentum=0.9), loss='categorical_crossent
 # we train our model again (this time fine-tuning the top 2 inception blocks
 # alongside the top Dense layers
 train_generator = make_train_generator()
-step_size_train = train_generator.n//train_generator.batch_size
-# train the model on the new data for a few epochs
-model.fit_generator(generator=train_generator,
-                    steps_per_epoch=step_size_train,
-                    epochs=10,
-                    callbacks=[meeshkan_callback,
-                               ModelCheckpoint('weights.{epoch:02d}.hdf5')])
-
-model.save('tmnt_koopa_%d.h5' % (int(time.time()*1000),))
+step_size_train = train_generator.n // train_generator.batch_size
 
 test_generator = make_test_generator()
 step_size_test = test_generator.n // test_generator.batch_size
+
+EPOCHS = 10
+TEST_INTERVAL = 1
+
+for i in range(EPOCHS):
+    # train the model on the new data for a few epochs
+    model.fit_generator(generator=train_generator,
+                        steps_per_epoch=step_size_train,
+                        epochs=1,
+                        callbacks=[meeshkan_callback,
+                                   ModelCheckpoint('weights.{epoch:02d}.hdf5')])
+    if i % TEST_INTERVAL == 0:
+        test_loss, test_accuracy = model.evaluate_generator(generator=test_generator,
+                                                            steps=step_size_test)
+        meeshkan.report_scalar("Test loss", test_loss, "Test accuracy", test_accuracy)
+
+model.save('tmnt_koopa_%d.h5' % (int(time.time() * 1000),))
 
 test_loss_and_accuracy = model.evaluate_generator(generator=test_generator, steps=step_size_test)
 print('test loss and accuracy', test_loss_and_accuracy)
