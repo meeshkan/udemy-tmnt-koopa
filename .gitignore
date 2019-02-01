@@ -3,5 +3,7 @@ __pycache__
 .venv
 .vscode
 dataset/
+predict/
 test/
 train/
+*.hdf5
