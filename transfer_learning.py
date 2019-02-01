@@ -41,6 +41,7 @@ for layer in base_model.layers:
 model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=[metrics.categorical_accuracy])
 
 
+# Report train set loss and categorical accuracy to the Meeshkan agent at the end of minibatch
 def on_batch_end(batch, logs):  # pylint: disable=unused-argument
     try:
         meeshkan.report_scalar("train loss", float(logs['loss']))
